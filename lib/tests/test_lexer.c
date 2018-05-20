@@ -26,6 +26,8 @@
 #include "cfg-grammar.h"
 #include <criterion/criterion.h>
 
+#define TESTDATA_DIR TOP_SRCDIR "/lib/tests/testdata-lexer"
+
 typedef struct
 {
   YYSTYPE *yylval;
@@ -212,7 +214,7 @@ Test(lexer, test_qstring)
 #define TEST_BLOCK " {'hello world' \"test value\" {other_block} other\text}"
 #define TEST_BAD_BLOCK "this is a bad block starting " TEST_BLOCK
 
-Test(lexer, test_block)
+Test(lexer, block_token_is_taken_literally_between_a_pair_of_enclosing_characters)
 {
   _input(TEST_BLOCK);
   cfg_lexer_start_block_state(parser->lexer, "{}");
@@ -301,6 +303,32 @@ value0");
 `var2`\n");
   assert_parser_identifier("value1");
   assert_parser_identifier("value2");
+}
+
+Test(test_lexer, include_file_expands_the_content_of_that_file_in_the_token_stream)
+{
+  parser->lexer->ignore_pragma = FALSE;
+  _input("@include " TESTDATA_DIR "/include-test/foo.conf\n");
+  assert_parser_identifier("foo");
+}
+
+
+Test(test_lexer, include_wildcard_files_expands_the_content_of_all_files_in_the_token_stream_in_alphabetical_order)
+{
+  parser->lexer->ignore_pragma = FALSE;
+  _input("@include " TESTDATA_DIR "/include-test/*.conf\n");
+  assert_parser_identifier("bar");
+  assert_parser_identifier("baz");
+  assert_parser_identifier("foo");
+}
+
+Test(test_lexer, include_directory_expands_the_content_of_all_files_in_that_directory_in_alphabetical_ordre)
+{
+  parser->lexer->ignore_pragma = FALSE;
+  _input("@include " TESTDATA_DIR "/include-test\n");
+  assert_parser_identifier("bar");
+  assert_parser_identifier("baz");
+  assert_parser_identifier("foo");
 }
 
 static void
