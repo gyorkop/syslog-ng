@@ -286,7 +286,7 @@ Test(lexer, test_location_tracking)
   assert_location_tag("location='#buffer:3:1'");
 }
 
-Test(test_lexer, defined_variables_are_substituted_when_enclosed_in_backticks)
+Test(lexer, defined_variables_are_substituted_when_enclosed_in_backticks)
 {
   parser->lexer->ignore_pragma = FALSE;
   _input("@define var1 value1\n\
@@ -305,7 +305,7 @@ value0");
   assert_parser_identifier("value2");
 }
 
-Test(test_lexer, include_file_expands_the_content_of_that_file_in_the_token_stream)
+Test(lexer, include_file_expands_the_content_of_that_file_in_the_token_stream)
 {
   parser->lexer->ignore_pragma = FALSE;
   _input("@include " TESTDATA_DIR "/include-test/foo.conf\n");
@@ -313,7 +313,7 @@ Test(test_lexer, include_file_expands_the_content_of_that_file_in_the_token_stre
 }
 
 
-Test(test_lexer, include_wildcard_files_expands_the_content_of_all_files_in_the_token_stream_in_alphabetical_order)
+Test(lexer, include_wildcard_files_expands_the_content_of_all_files_in_the_token_stream_in_alphabetical_order)
 {
   parser->lexer->ignore_pragma = FALSE;
   _input("@include " TESTDATA_DIR "/include-test/*.conf\n");
@@ -322,7 +322,7 @@ Test(test_lexer, include_wildcard_files_expands_the_content_of_all_files_in_the_
   assert_parser_identifier("foo");
 }
 
-Test(test_lexer, include_directory_expands_the_content_of_all_files_in_that_directory_in_alphabetical_ordre)
+Test(lexer, include_directory_expands_the_content_of_all_files_in_that_directory_in_alphabetical_ordre)
 {
   parser->lexer->ignore_pragma = FALSE;
   _input("@include " TESTDATA_DIR "/include-test\n");
