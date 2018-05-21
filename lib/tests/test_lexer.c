@@ -232,15 +232,20 @@ Test(lexer, at_version_stores_config_version_in_parsed_version_in_hex_form)
   _input("@version: 3.15\n\
 foo\n");
   assert_parser_identifier("foo");
-  cr_assert_eq(configuration->parsed_version, 0x030f, "@version parsing mismatch, value %04x expected %04x", configuration->parsed_version, 0x030f);
+  cr_assert_eq(configuration->parsed_version, 0x030f,
+               "@version parsing mismatch, value %04x expected %04x", configuration->parsed_version, 0x030f);
+
   _input("@version: 3.1\n\
 bar\n");
   assert_parser_identifier("bar");
-  cr_assert_eq(configuration->parsed_version, 0x0301, "@version parsing mismatch, value %04x expected %04x", configuration->parsed_version, 0x0301);
+  cr_assert_eq(configuration->parsed_version, 0x0301,
+               "@version parsing mismatch, value %04x expected %04x", configuration->parsed_version, 0x0301);
+
   _input("@version: 3.5\n\
 baz\n");
   assert_parser_identifier("baz");
-  cr_assert_eq(configuration->parsed_version, 0x0305, "@version parsing mismatch, value %04x expected %04x", configuration->parsed_version, 0x0305);
+  cr_assert_eq(configuration->parsed_version, 0x0305,
+               "@version parsing mismatch, value %04x expected %04x", configuration->parsed_version, 0x0305);
 }
 
 Test(lexer, test_lexer_others)
