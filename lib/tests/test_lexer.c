@@ -262,11 +262,11 @@ Test(lexer, test_lexer_others)
   assert_parser_char('|');
   _input("4.2 12 0x50 011 +12 -12 -4.2 +4.2");
   assert_parser_float(4.2);
-  assert_parser_number(12);
-  assert_parser_number(80 /*0x50*/);
-  assert_parser_number(9 /*011 */);
-  assert_parser_number(12);
-  assert_parser_number(-12);
+  assert_parser_number(12LL);
+  assert_parser_number(80LL /*0x50*/);
+  assert_parser_number(9LL /*011 */);
+  assert_parser_number(12LL);
+  assert_parser_number(-12LL);
   assert_parser_float(-4.2);
   assert_parser_float(4.2);
   _input("test_value");
